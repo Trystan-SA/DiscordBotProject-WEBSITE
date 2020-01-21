@@ -1,3 +1,5 @@
+https://imgur.com/Q7S3W5F
+
 # Discord Bot - Website
  Personal Project - A Discord Web app that can configure a Discord bot. Work together with the DiscordBot app. 
  
