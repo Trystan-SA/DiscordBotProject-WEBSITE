@@ -1,7 +1,7 @@
 # Discord Bot - Website
  Personal Project - A Discord Web app that can configure a Discord bot. Work together with the DiscordBot app. 
  
- This project is 4 month old. The webapp have a full Client Authentication process. Once signed-in, the client invite the Discord Bot in his server. And then can be configured from the Web Dashboard. 
+ This project is made under 4 months. The webapp have a full Client Authentication process. Once signed-in, the client invite the Discord Bot in his server. And then can be configured from the Web Dashboard. 
  
  The website also have a simple blog system (made in 1 week, nothing really fancy). And a little prototype of a feedback app.
  
