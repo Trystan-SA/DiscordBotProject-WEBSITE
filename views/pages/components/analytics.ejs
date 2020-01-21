@@ -1,0 +1,83 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+<div class="row swing-in-top-fwd container cardrow analyticscontent">
+    <div style="background-color:#252d3b">
+
+        <h3 style="padding:15px 0px 0px 15px; font-size:2em; margin:0">Analytics</h3>
+        <!--<a class="waves-effect waves-light btn deep-purple" id="MembersButton">Members</a> 
+        <a class="waves-effect waves-light btn deep-purple" id="OnlineButton">Online</a>
+        <a class="waves-effect waves-light btn deep-purple" id="MessagesButton">Messages</a> -->
+
+
+        <div id="Members">
+            <canvas id="myChart" width="400" height="75"></canvas>
+            <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+
+                    labels: ['01/01/1980', '02/01/1981', '03/01/1982', '04/01/1983', '05/01/1984', '06/01/1985', '07/01/1986', '08/01/1987', '09/01/1988','10/01/1989', '11/01/1990', '12/01/1991'],
+                    datasets: [{
+                        label: 'Total Members',
+                        data: [0, 100, 50, 200, 100, 300, 150, 400, 200, 500, 250, 600],
+                        backgroundColor: ['rgba(35, 156, 255, 0.2)'],
+                        borderColor: [
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)',
+                            'rgba(35, 156, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+            </script>
+        </div>
+
+
+        <div id="Online" style="display:none">
+            <h1>Online</h1>
+        </div>
+
+        <div id="Messages" style="display:none">
+            <h1>Messages</h1>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<!--<script>
+$('#MembersButton').click(function(){
+    $('#Members').show(400);
+    $('#Online').hide(400);
+    $('#Messages').hide(400);
+})
+
+$('#OnlineButton').click(function(){
+    $('#Members').hide(400);
+    $('#Online').show(400);
+    $('#Messages').hide(400);
+})
+
+$('#MessagesButton').click(function(){
+    $('#Members').hide(400);
+    $('#Online').hide(400);
+    $('#Messages').show(400);
+})
+</script> -->

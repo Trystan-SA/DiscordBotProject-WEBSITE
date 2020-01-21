@@ -1,0 +1,68 @@
+@media screen and (min-width: 200px) and (max-width: 992px) {
+    
+    .sidenav-trigger i {height:50px !important; font-size:35px !important;}
+    .sidenav{ background-color:var(--darkblue); padding-top:75px;}
+    .sidenav li a { color:var(--blue) !important; font-size:1.5em;}
+
+    .profilepicture{float:left;}
+
+
+    .indextitle h1 {font-size:2em; }
+    .indextitle h2 {font-size:1.2em;}
+
+
+
+    .pricing {padding-top:0px; }
+    .pricing h1 {font-size:2.5em; padding-left:10px;}
+    .pricing .col {height:auto !important; margin-bottom:25px;}
+    .pricing .titlecard {font-size:1.5em;}
+    .pricing .titlecard i {font-size:0.9em;}
+    .pricing .price {font-size:0.8em; padding-top:3px; }
+    .pricing .header {font-size:1em !important; }
+    .pricing p {font-size:1em;}
+
+
+
+    .UserRelated {padding:0; background-color:var(--darkblue) }
+    .UserPanel ul {margin-top:0px;}
+    .UserPanel li a {padding-top:15px; display:inline-block;}
+    .right {float:none !important;}
+    .left {float: none !important;}
+    .UserPanel ul .btn-large {padding: 0 0px; height:30px; line-height: 25px; margin-top:15px; width:43%;}
+    .UserPanel ul .btn-large i {margin-left:0;}
+    .UserPanel ul .btn-large .material-icons {padding-top:0px;}
+    .UserPanel ul .dropdown-trigger {width:90%; left:15px;}
+    .verylarge {width:100%; margin-left:-25px}
+
+
+    .title h1 {font-size:2em;}
+    .card .card-action p {font-size:1.1em; }
+    .cardcol {margin-bottom:50px; }
+    #MainPanelContent {height:auto; }
+    
+
+    .panel {margin: 25px auto 25px auto; width:100%; }
+    .panel span {padding-left:10px; padding-top:0px;}
+    .panel h1 {font-size:1.5em; padding:-5px 10px 20px 10px !important;}
+    .panel .content {padding:15px 5px 5px 5px; }
+    .input-field .checkboxspan {font-size:1.1em; }
+    .select-wrapper input.select-dropdown {width:95%; }
+
+
+    .AccountModalContent{margin:75px 0;}
+
+
+
+    .AboutMeContent {margin:0}
+    .AboutmeDiv {padding:15px;}
+    .AboutmeDiv .row {margin-bottom:0}
+    .AboutmeDiv2 {padding:15px;}
+
+    #Message {
+        position: absolute;
+        z-index: 999;
+        left: 5%;
+        width:90%;
+        margin-top:15px;
+    }
+}

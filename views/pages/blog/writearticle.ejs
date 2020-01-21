@@ -1,0 +1,145 @@
+<% include ../components/header %>
+</head>
+<body id="page-top">
+
+<%- include('../components/nav'); %>
+
+<blogconfig><%= locals.blogconfig %></blogconfig>
+
+
+<link rel="stylesheet" href="<%- process.env.THIS_ADRESSE %>css/simplemde.min.css">
+<script src="<%- process.env.THIS_ADRESSE %>js/simplemde.min.js"></script> 
+<script src="<%- process.env.THIS_ADRESSE %>js/showdown.min.js"></script>
+
+<div id="Blog">
+    <nav class="Category row">
+        <div class="col offset-l1 l2"><a href=""><h1>WRITE ARTICLE</h1></a></div>
+        <div class="col l6 s12">
+            <a class="CategoryLink" href="../blog">Blog</a>
+        </div>
+    </nav>
+
+    <div class="row" style="margin-bottom:0;">
+        <div class="col offset-l2 l6 s12">
+            <form action="/bloger/publish" method="post" id="article">
+                <label>Article Title</label>
+                <input form="article" type="text" id="ArticleTitle" name="ArticleTitle" required minlength="5" maxlength="110">
+                <label>Article Description</label>
+                <textarea form="article" name="ArticleDescription" id="ArticleDescription" required minlength="5" maxlength="300"></textarea>
+
+                
+                <select form="article" name="Category" id="Category">
+                    <option value="" disabled selected>Choose your option</option>  
+                </select>
+                <label>Materialize Select</label>
+
+
+                <% if(locals.Edit){  %>
+                    <input form="article" style="display:none" type="text" name="ID" value=<%=locals.Edit[0].ID%>>
+                    <input form="article" class="submit" type="submit" name="publish" value="edit">
+
+                <% } else { %>
+                <input form="article" class="submit" type="submit" name="publish" value="save">
+                <input form="article" type="submit" name="publish" value="publish">
+                <% } %>
+
+
+                <div style="height:250px; margin-top:75px; caret-color:red !important;">
+                    <textarea id="MarkdownEditor">
+                    </textarea>
+                </div>
+
+            
+                <textarea form="article" style="margin-bottom:150px; display:none" class='ArticleContent' name="Markdown"></textarea>
+            </form>
+        </div>
+
+        <div class="col l2 s12">
+                <%if (locals.Articles){
+                    for(var y = 0; y < locals.Articles.length; y++){ 
+                        var articletime = new Date(locals.Articles[y].post_date);
+    
+                        var Day = articletime.getDate();
+                        if(Day < 10){
+                            Day = "0" + Day; 
+                        }
+    
+                        var Month = articletime.getMonth();
+                        if(Month < 10){
+                            Month = "0" + Month;
+                        }
+    
+                        var PostDate = Day + "-" + Month + "-" + articletime.getUTCFullYear();   %>
+    
+                        <div class="Article_Card AdminVignette">
+                            <div class="Text">
+                                <a href="?EditID=<%=locals.Articles[y].ID %>"><h2><%= locals.Articles[y].Title %></h2></a>
+                                <span><%= locals.Articles[y].Category %></span> <br>
+                                <%if(locals.Articles[y].Status == "Draft"){ %>
+                                    <a href="publish?value=true&ID=<%=locals.Articles[y].ID %>"><span class="deep-orange  grey-text text-darken-4">Draft</span></a>
+                                <%} else if(locals.Articles[y].Status == "Published"){%>
+                                    <a href="publish?value=false&ID=<%=locals.Articles[y].ID %>"><span class="green grey-text text-darken-4">Published</span></a>
+                                <%}%>
+                            </div>
+                        </div>
+                <% }
+                }%>
+        </div>
+    </div>
+</div>
+
+<Edit style="display:none"><% if(locals.Edit){%> <%=JSON.stringify(locals.Edit)%> <%}%></Edit>
+
+ <script>
+     //If we edit an Article. Replace every things//
+    var Edit = "";
+    if($('Edit').html() != ""){
+        Edit = $('Edit').html();
+        Edit = JSON.parse(Edit);
+
+        //Push the Edit.content to the MarkdownEditor//
+        Edit[0].Content = Edit[0].Content.replace(/&lt;/g, "<")
+                                        .replace(/&gt;/g, ">");
+        var Convertion = new showdown.Converter()
+        Convertion.text = Edit[0].Content
+        Convertion.html = Convertion.makeMarkdown(Convertion.text);
+        Edit[0].Content = Convertion.html;
+
+    
+        $('#ArticleTitle').val(Edit[0].Title);
+        $('#ArticleDescription').html(Edit[0].Description);
+        $('#Category').val(Edit[0].Category);
+    }
+
+
+    var BlogConfig = $('blogconfig').html();
+    BlogConfig = JSON.parse(BlogConfig);
+    $('blogconfig').html("");
+
+
+    Object.values(BlogConfig.Categories).forEach(function(element, index){
+        $('select').html($('select').html() + `<option value="${element.DisplayTag}" selected>${element.DisplayTag}</option>`);
+    });
+
+    $('select').val(Edit[0].Category);
+
+    M.AutoInit();
+    
+    var simplemde = new SimpleMDE({ element: $("#MarkdownEditor")[0] });
+    simplemde.value("");
+    if(Edit){ simplemde.value(Edit[0].Content);
+        SimpleMDE_OnChange();
+    }
+
+    simplemde.codemirror.on('change', function(){
+       SimpleMDE_OnChange();
+    })
+
+    function SimpleMDE_OnChange(){
+        var Convertion = new showdown.Converter()
+        Convertion.text = simplemde.value();
+        Convertion.html = Convertion.makeHtml(Convertion.text);
+        $('div .ArticleContent').html(Convertion.html);
+        $('textarea .ArticleContent').html(Convertion.html);
+    }
+</script>

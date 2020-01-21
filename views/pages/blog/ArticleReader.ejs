@@ -1,0 +1,102 @@
+<% include ../components/header %>
+</head>
+<body id="page-top">
+
+<%- include('../components/nav'); %>
+
+<%  var ArticleToRead = locals.ArticleToRead[0]; 
+
+
+    var articletime = new Date(ArticleToRead.post_date);
+    var Day = articletime.getDate();
+    if(Day < 10){
+        Day = "0" + Day; 
+    }
+
+    var Month = articletime.getMonth();
+    if(Month < 10){
+        Month = "0" + Month;
+    }
+
+    var PostDate = Day + "-" + Month + "-" + articletime.getUTCFullYear();   
+
+    var CategoryName = ArticleToRead.Category;
+    CategoryName = CategoryName.replace(/_/g, " ");
+
+    var ArticleURL = ArticleToRead.Title;
+    ArticleURL = encodeURI(ArticleURL);
+%>
+
+<div id="Blog">
+    <nav class="Category row">
+        <div class="col offset-l1 l2"><a href="../../blog"><h1>Blog</h1></a></div>
+
+
+        <div class="col l6 s12">
+            <% if(locals.Categories){
+                for(var i = 0; i < Object.values(locals.Categories).length; i++){ 
+
+                    var DisplayCategory = Object.values(locals.Categories)[i]['DisplayTag']
+                    DisplayCategory = DisplayCategory.replace(/_/g, " ");
+                    %>
+                   <a class="CategoryLink" href="../../blog/<%= Object.values(locals.Categories)[i]['DisplayTag']; %>"><%= DisplayCategory %></a>
+                <%};
+            }%>
+        </div>
+
+
+        <div class="col l3">
+            <% if(locals.OwnerData){
+                if(locals.OwnerData.oauth['id'] == "106034269914144768"){%>
+                    <a class="waves-effect waves-light btn-large right-align bluebutton" href="../../bloger/writearticle">Write an Article</a>
+                    <a class="waves-effect waves-light btn-large right-align bluebutton" href="../../bloger/writearticle?EditID=<%= ArticleToRead.ID %>">Edit</a>
+            <%  }
+            } %>
+        </div>
+    </nav>
+
+
+    <div class="row Breadcrumb">
+        <div class="col offset-l3 l4 s12">
+            <%if (locals.query){
+                var Displayed = locals.query;
+                Displayed = Displayed.replace(/_/g, " ");
+            %>
+                
+                <br>
+                <span class="Ariane"><a href="../../blog">Blog</a> > <a href="../../blog/<%= locals.query %>"><%= Displayed  %></a> >
+                <a href="../../blog/<%= locals.query %>/<%= locals.articleread %>"><%= locals.ArticleToRead.Title %></a>
+                </span>
+
+            <%}%>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="ArticleContent col offset-l3 l6 s12">
+            <img src="/images/articles/<%= ArticleToRead.ID %>.jpg"></img>
+            <div class="headerArticle">
+                
+                <span><%= PostDate %> | <a href="/about_me"><%= ArticleToRead.author %></a> | <a href="../../blog/<%= ArticleToRead.Category %>"><%= CategoryName %></span></a>
+                <h1 class="Title"><%- ArticleToRead.Title %></h1>
+                <h2 class="Description"><%- ArticleToRead.Description %></h2>
+            </div>
+        
+
+            <div class="ArticleReader">
+                <%- ArticleToRead.Content %>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="BreadcrumbList">
+        <%- locals.Breadcrumb %>
+    </div>
+
+    <div id="ArticlesList">
+        <%- locals.ArticleGenerator %>
+    </div>
+
+
+<%- include ../components/footer %>

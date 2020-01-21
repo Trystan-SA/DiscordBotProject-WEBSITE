@@ -1,0 +1,45 @@
+<!-- Navigation -->
+
+<nav style="z-index: 10; position:relative;">
+  <div class="nav-wrapper">
+    <a href="../../" class="brand-logo tracking-in-expand">Quested</a>
+
+     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="hide-on-med-and-down">
+
+      <li><a href="../../blog">Blog</a></li>
+      <li><a href="../../#Features" rel="nofollow">Features</a></li>
+      <li><a href="../../FAQ&Guides">FAQ & Guides</a></li>
+      <li><a href="../../pricing">Pricing</a></li>
+      <li><a href="https://discord.gg/v7dxcJM" rel="nofollow" target="_blank">Community</a></li>
+      <li><a href="../../about_me">About</a></li>
+      <li class="lispace"></li>
+      <%- include useravatar %>
+
+    </ul>
+  </div>
+</nav>
+
+
+
+  <ul class="sidenav" id="mobile-demo">
+      <li><a href="../../blog">Blog</a></li>
+      <li><a href="../../#Features" rel="nofollow">Features</a></li>
+      <li><a href="../../FAQ&Guides">FAQ & Guides</a></li>
+      <li><a href="../../pricing">Pricing</a></li>
+      <li><a href="https://discord.gg/v7dxcJM" rel="nofollow" target="_blank">Community</a></li>
+      <li><a href="../../about_me">About</a></li>
+      <li class="lispace"></li>
+      <%- include useravatar %>
+    </ul>
+
+<script>
+  var sidenavs = document.querySelectorAll('.sidenav')
+  for (var i = 0; i < sidenavs.length; i++){
+    M.Sidenav.init(sidenavs[i]);
+  }
+</script>
+
+
+  
+        

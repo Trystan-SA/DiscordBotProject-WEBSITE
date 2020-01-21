@@ -1,0 +1,43 @@
+{
+  "name": "quested_website",
+  "version": "0.0.1",
+  "description": "Quested Website",
+  "main": "site.js",
+  "scripts": {
+    "dev": "nodemon app_website.js --config nodemon.json",
+    "prod": "node app_website.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.1.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.5",
+    "express-mysql-session": "^2.1.0",
+    "express-sanitizer": "^1.0.5",
+    "express-session": "^1.16.2",
+    "express-validator": "^6.2.0",
+    "form-data": "^2.5.1",
+    "helmet": "^3.21.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.13",
+    "mysql": "^2.17.1",
+    "node-fetch": "^2.6.0",
+    "node-schedule": "^1.3.2",
+    "node-session": "^1.2.1",
+    "nodemailer": "^6.3.0",
+    "pino": "^5.13.4",
+    "pm2": "^3.5.1",
+    "request": "^2.88.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "pino-pretty": "^3.2.1"
+  },
+  "snyk": true
+}

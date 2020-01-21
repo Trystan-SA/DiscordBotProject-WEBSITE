@@ -1,0 +1,178 @@
+<!--   ####  SAVE HELPER ####   -->
+<!-- Tell you if you made changes, and let you save or discard your changes -->
+<div id="ChangesHelper" class="valign-wrapper swing-in-top-fwd">
+  <div class="row">
+    <div class="col s6">
+      <p>Unsaved changes</p>
+    </div>
+
+    <div class="col s3">
+      <a class="waves-effect waves-light btn redbutton" onclick="DiscardChanges(false)">Discard</a>
+    </div>
+    
+    <div class="col s3">
+      <a class="waves-effect waves-light btn greenbutton" onclick="SaveChanges()">Save</a>
+    </div>
+  </div>
+</div>
+
+
+<!--  ####  DISCORD CHANGES MODAL ####  -->
+<!-- A verification modal to be sure you want to discard changes -->
+<div>
+    <div id="DiscardModal">
+        <div class="row">
+            <div class="col s12">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                <span class="card-title ">Are you sure ?</span>
+                <p>You are about the <b>DISCARD</b> every changes you've made. If you want to return and keep your changes, click the big blue button.</p>
+                <br><br>
+                <a class="waves-effect waves-light btn-large right-align bluebutton" onclick=" $('#DiscardModal').css('display', 'none');" >KEEP WHAT I'VE DONE</a>
+                <a class="waves-effect waves-light btn-large right-align redbutton" style="margin-left:20px" href="/Dashboard" >Discard everything </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- #### ACCOUNT MODAL SHOW #### -->
+<!-- Popup with all the information about the account of the Owner -->
+<div id="AccountModal">
+    <div class="AccountModalContent swing-in-top-fwd">
+        <div class="card">
+            <br> 
+            <span class="card-title ">Account Settings</span>
+            <span class="close-modal right-align" onclick=" var event = { 'target': 'CloseSpanModal'}; CloseModal(event)">X</span>
+            <br>
+            <br>
+
+            <div class="card-content">
+                <form action="" method="post" id="Notification">
+                    <div class="subject">
+                        <h3>Newsletter</h3>
+                        <p>Receive top secret documents now 😋</p>
+                        <p>You will receive emails about Quested's News, Operations and Tips to improve your community.</p><br>
+                        
+                         <!-- Begin Mailchimp Signup Form -->
+                        <div id="mc_embed_signup">
+                            <form action="https://gmail.us3.list-manage.com/subscribe/post?u=389eb4848390a3376dbad9b5e&amp;id=ce4763d752" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                <div id="mc_embed_signup_scroll">
+                                
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address </label>
+                                <input style="background-color:#10121a44" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            </div><br>
+                                <div id="mce-responses" class="clear">
+                                    <div class="response" id="mce-error-response" style="display:none"></div>
+                                    <div class="response" id="mce-success-response" style="display:none"></div>
+                                </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_389eb4848390a3376dbad9b5e_ce4763d752" tabindex="-1" value=""></div>
+                                <div class="clear">  <input type="submit" value="Subscribe   " name="subscribe" id="mc-embedded-subscribe" class="button waves-effect waves-light btn bluebutton"></div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--End mc_embed_signup-->
+                    </div>
+
+                    <div class="subject">
+                        <h3>Premium</h3>
+                        <div id="PremiumContent"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- #### ACCOUNT MODAL - REFUND PANEL SHOW #### -->
+<!-- Popup with action to get a refund -->
+<div id="RefundPanel">
+    <div class="AccountModalContent swing-in-top-fwd">
+        <div class="card">
+            <br> 
+            <span class="card-title ">Refund request</span>
+            <br>
+            <br>
+
+            <div class="card-content">
+                <div class="subject">
+                    <p>We have a friendly refund policy. We will refund any first month subscription, no question asked, 
+                    if you made a refund request within the next 14 days following the first paiement.</p> 
+                    <p>Your refund request will be reviewed manually. This review can take up to 1 week.</p> <br>
+
+                    <p>For other reasons, we cannot guarantee a refund. But we will consider every request carefully.</p><br>
+
+                    <form action="/SendRefundRequest" method="post" class="RefundRequest">
+
+                        <input id="ServerInfo" style="display:none" name="ServerInfo" value="1">
+                            <select name="Select" id="RefundSelect">
+                            <option value="0" disabled selected>Choose your reason</option>
+                            <option value="1">Refund request under 14 day after the first paiement.</option>
+                            <option value="2">I am not satisfied anymore by the recent updates of the bot</option>
+                            <option value="3">I had technical issues. and the support haven't been useful</option>
+                            <option value="4">I buyed the premium subscription by error / I wasn't aware it was a monthly subscription.</option>
+                            <option value="5">No particular reasons. I just want a refund. </option>
+                        </select>   
+
+                        <br><br>
+                        <p>Please explain to us why you requested a refund.</p>
+                        <textarea id="textarea1" class="materialize-textarea" name="reasontext"></textarea> 
+
+                        <br><br>
+                        <a id="RefundSubmit" class="waves-effect waves-light greenbutton btn">
+                            <input type="submit">
+                        </a>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CANCAL PANEL -->
+<div id="CancelPanel">
+    <div class="AccountModalContent swing-in-top-fwd">
+        <div class="card">
+            <br> 
+            <span class="card-title ">Cancel subscription</span>
+            <br>
+            <br>
+
+            <div class="card-content">
+                <div class="subject">
+                    <p>You can cancel your subscription at anytime. Your current month will still be active, 
+                    but the next month will not be billed and you will loose your Quested premium membership. <br>
+                    Note that only plugins will be deactivated. The modifications you've made to the bot will still be saved.</p><br><br>
+
+                    <form action="/SendCancelationRequest" method="post" class="RefundRequest">
+                        <input id="ServerInfoCancelation" style="display:none" name="ServerInfo" value="1">
+                            <select name="SelectCancelation" id="RefundSelect">
+                            <option value="0" disabled selected>Choose your reason</option>
+                            <option value="1">I found a better bot somewhere else</option>
+                            <option value="2">I am not satisfied anymore by the recent updates of the bot</option>
+                            <option value="3">I had technical issues. and the support haven't been useful</option>
+                            <option value="4">I buyed the premium subscription by error / I wasn't aware it was a monthly subscription.</option>
+                            <option value="5">No particular reasons. I just want a refund. </option>
+                        </select>   
+
+                        <br><br>
+                        <p>Please explain to us why you requested a subscription cancelation..</p>
+                        <textarea id="textarea1" class="materialize-textarea" name="reasontext"></textarea> 
+
+                        <br><br>
+                        <a id="RefundSubmit" class="waves-effect waves-light redbutton btn">
+                            <input type="submit">
+                        </a>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

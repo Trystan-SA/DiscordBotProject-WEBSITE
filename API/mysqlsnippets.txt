@@ -1,0 +1,29 @@
+
+---- Select a Guild Entry from OwnerID ----
+SELECT @GuildID := GuildID FROM quested.Owners_has_Guild WHERE OwnerDiscordID = '106034269914144768';
+SELECT * FROM quested.Guild WHERE GuildID = @GuildIDionID
+
+
+
+
+
+
+---- Select a Owner Entry from GuildID ----
+SELECT @OwnerDiscordID := OwnerDiscordID FROM quested.Owners_has_Guild WHERE GuildID = '55';
+SELECT * FROM quested.Owners WHERE OwnerDiscordID = @OwnerDiscordID
+
+
+
+
+
+---- Select Premium Subscription from OwnerID ----
+SELECT @GuildID := GuildID FROM quested.Owners_has_Guild WHERE OwnerDiscordID = '106034269914144768';
+SELECT @PremiumSubscriptionID := PremiumSubscriptionID FROM quested.Guild WHERE GuildID = @GuildID;
+SELECT * FROM quested.PremiumSubscription WHERE PremiumSubscriptionID = @PremiumSubscriptionID;
+
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+    <% include components/header %>
+    <meta name="robots" content="noindex, nofollow"/>
+</head>
+
+
+<body id="page-top">
+    
+<%- include components/nav %>
+
+<div class="UserPanel">
+    <div class="UserRelated">
+        <ul class="right">
+            <li>
+                <% if(locals.Owner.DiscordOauth['id'] == "106034269914144768"){%>
+                    <a class="waves-effect waves-light btn-large right-align bluebutton" href="/adminpanel">Admin Panel</a>
+                <% } %>
+                <a class="waves-effect waves-light btn-large right-align greenbutton" href="https://discordapp.com/api/oauth2/authorize?client_id=581213845520121870&permissions=8&redirect_uri=http%3A%2F%2F51.77.229.195%2Flogincallback&scope=bot"><i class="material-icons right">memory</i>Invite the bot</a>
+                <a class="waves-effect waves-light btn-large right-align bluebutton" onclick="Modal_account_Show()"><i class="material-icons right">account_box</i>Account</a>
+                <a class="waves-effect waves-light btn-large right-align redbutton" href="../logout"><i class="material-icons right">power_settings_new</i>Logout</a>
+            </li>
+        </ul>
+
+        <ul class="left">
+            <li>
+                <%  if (locals.serverselected != undefined){ %>
+                    <a class='dropdown-trigger btn-large verylarge' href="#" data-target="dropdown1"><i class="material-icons right">expand_more</i><%=locals.serverselected %></a>
+                <%  } 
+
+                    else {
+                        var HaveOwnerGuilds = false;
+                        locals.Owner.DiscordGuilds.forEach(element => {if(element.owner == true){HaveOwnerGuilds = true}});
+
+                        if(HaveOwnerGuilds == true){ %>
+                            <a class='dropdown-trigger btn-large verylarge' href='#' data-target='dropdown1'><i class="material-icons right">expand_more</i>Select a Server</a>
+                    <%  } else {%>
+                            <a class='dropdown-trigger btn-large verylarge' href='#' data-target='dropdown1'><i class="material-icons right">expand_more</i>You don't have any owned server...</a>
+                    <%  }
+                    }%>
+
+
+                <%if (locals.guildid){ %>
+                    <a class="waves-effect waves-light btn-large right-align gradpurple icononly" href="../reloadOauthData?Guildid=<%=locals.guildid%>"><i class="material-icons right">refresh</i></a>
+                <% }else { %>
+                    <a class="waves-effect waves-light btn-large right-align gradpurple icononly" href="../refresh"><i class="material-icons right">refresh</i></a>
+                <% } %>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+    <% if(locals.serverselected){ %>
+        <form action="/save?server=<%=locals.serverselected%>" method="post" name="configname" class="dashboardform" id="config"> 
+    <%} else { %>
+        <form action="/save" method="post" name="configname" class="dashboardform" id="config"> 
+    <% } %>
+
+        <div id="Helper">
+            <%- include('components/dashboard_helper');%>
+        </div>
+
+
+        <div id="MainPanelContent">
+            <%- include('components/dashboard'); %>
+        </div>
+
+       
+
+        <div id="Panel_Configuration"></div> <!-- ALL PANELS ARE DRAW HERE -->
+
+        <div>
+            <PassedData OwnerData = '<%=JSON.stringify(locals.Owner)%>'  GuildInfo = '<%=JSON.stringify(locals.SelectedGuildInfo)%>'>
+            <SecondaryData Sitelink = '<%=locals.sitelink%>' SelectedServer = '<%=locals.serverselected%>'>
+        </div>
+      
+        <script src="js/pluginsconfig.js"></script> 
+        <script src="js/interactible.js"></script>
+        <script>
+            $("#DiscardModal").click(function(e) {
+                if(e.target !== this){
+                    return
+                }
+            $("#DiscardModal").css("display", "none");
+            });
+        </script>
+    </form>
+</div>
+
+ <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <% for(i in locals.Owner.DiscordGuilds) {
+        if(locals.Owner.DiscordGuilds[i].owner == true){%>
+        
+        <li><a href="?server=<%=locals.Owner.DiscordGuilds[i].name%>" ><%= locals.Owner.DiscordGuilds[i].name%> </a></li>
+        <%} %>
+    <% }%>
+  </ul>
+
+
+<% include components/footer %>
+
+<% include RealtimeSupport/UserSupport %>
+
+
+<script> M.AutoInit();</script>

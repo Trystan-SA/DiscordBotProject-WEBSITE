@@ -1,0 +1,239 @@
+<% include components/header %>
+<title>Quested - Discord Bot</title> 
+</head>
+<body id="page-top">
+
+<%- include('components/nav'); %>
+
+<script src="https://unpkg.com/css-doodle@0.7.1/css-doodle.min.js">
+    document.addEventListener('click', function(e) {
+  e.target.update && e.target.update();  
+});
+</script>
+
+
+<div id="doodleCSS-Index">
+    <css-doodle style="z-index: 1; position:relative;">
+            :doodle {
+            --s : 0;
+            @grid: 20 / 100vmax;
+            background:  radial-gradient(
+                @p(#1e2124, #1e2124) @r(70%),
+                transparent 0
+            font-family: sans-serif;
+            width:100%; height:100%;
+            }
+
+            :doodle(:hover){--s: 1}
+
+            :after {
+            content: @pick(🍇, ☂️, 🍆, 🔮, 💣, 🎵, 💜, 😂, 😎, 👽, 😭, 👍, 👌, ✋, 💪, 🙏, ☄️, 🔥, 🥖, 🌌, 💎, 🔨, 🗝, ❤️, 🕹, 💰, 😵, 💀, 🙄, 😨, 🤭,👊,👏,🙈,🙉,🙊,🌲,⚡️,🔔,💯, 📌,🖱, 💡,🏹, 🌎, 🦊 );
+            color: hsla(@r(-150), 30%, 50%, @r(.001));
+            font-size: 2vmax;
+            }
+
+            transition: .5s cubic-bezier(.175, .885, .32, 1.275);
+            transition-delay: @rand(50000ms);
+            transform: rotate(1turn);
+
+            
+    </css-doodle>
+
+    <css-doodle style="z-index: 1; position:realtive; height:1000px;"> 
+            :doodle {
+            @grid: 1x3 / 100vmax;
+            position: fixed;
+            top: 0; left: 0;
+            }
+        
+            position:relative;
+
+            background: @m(55, (
+                linear-gradient(transparent, @p(
+            #348ff9@repeat(2, @p([0-9a-f])),
+            #9334f9@repeat(2, @p([0-9a-f]))
+            ))
+                @r(0%, 100%) @r(0%, 300%) /
+                @r(3px) @r(20vmin)
+                no-repeat
+            ));
+        
+            will-change: transform;
+            animation: f 20s linear calc(-200s / @size() * @i()) infinite;
+            @keyframes f {
+                from { transform: translateY(-100%) }
+                to { transform: translateY(100%) }
+            }
+        </css-doodle>
+        <script>
+            // Opera 8.0+
+        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+        // Firefox 1.0+
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+
+        // Safari 3.0+ "[object HTMLElementConstructor]" 
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+        // Internet Explorer 6-11
+        var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+        // Edge 20+
+        var isEdge = !isIE && !!window.StyleMedia;
+
+        // Chrome 1 - 71
+        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+        // Blink engine detection
+        var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+
+        if(isEdge == true || isIE == true || isSafari == true || isOpera == true){
+            document.getElementById("doodleCSS-Index").style.opacity = 0;
+        }
+        </script>
+</div>
+
+
+
+
+<div id="indexlanding">
+    <div class="row">
+        <div class="col s0 l2"></div>
+
+
+        <div class="col s12 l8">
+            <div class="center indextitle">
+                <h1>Boost your online community</h1>
+                <h2>Easy to use and feature rich <b>Discord bot</b> to create the perfect server for your community</h2>
+
+            </div>
+
+            <div class="center indexButtons">
+                    <a class="waves-effect waves-light btn-large bluebutton" href="dashboard">Quick Start</a>
+            </div>
+
+
+        </div>
+        <div class="col s0 l2"></div>
+    </div>
+</div>
+
+
+<div id="Features" class="Features">
+    <div class="row container">
+        <div class="col s8">
+            <h1>Enhance your Discord Server</h1>
+            <p></p>
+        </div>
+
+        <div class="col s4">
+            <img src="images/index_svg/Feature_01.png" style="float:right; width:100%;">
+        </div>
+    </div>
+</div>
+
+
+<div class="abbyss" style="position:relative; z-index:5">
+        <div class="dashboard_svg center-align" style="position:relative; z-index:6">
+            <img src="images/index_svg/Dashboard.png" style="max-width:100%; height:auto;">
+        </div>
+</div>
+
+<div id="Features" class="Features">
+        <div class="row">
+            <div class="col s12">
+                
+            </div>
+        </div>
+    </div>
+
+
+
+<script>
+    var $window = $(window);
+    var $elem = $(".toanimate_left");
+    var $elem2 = $(".toanimate_right");
+
+    function isScrolledIntoView($elem, $window) {
+        var docViewTop = $window.scrollTop();
+        var docViewBottom = docViewTop + $window.height();
+
+        var elemTop = $elem.offset().top;
+        var elemBottom = elemTop + $elem.height();
+
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+
+    $(document).on("scroll", function () {
+        if (isScrolledIntoView($elem2, $window)){
+            $elem2.addClass("animated_slideinright_img");
+
+        }
+        if (isScrolledIntoView($elem, $window)) {
+            $elem.addClass("animated_slideinleft_img")
+        }
+    });
+</script>
+
+
+<% include components/footer %>
+   
+
+
+
+<!-- Organization LDJSON -->
+<script type="application/ld+json"> 
+    {
+        "@context": "http://www.schema.org",
+        "@type": "Organization",
+        "name": "Quested",
+        "logo": "https://upload.wikimedia.org/wikipedia/fr/thumb/0/05/Discord.svg/220px-Discord.svg.png",
+        "url": "https://discordapp.com/",
+        "description": "Quested is Discord Bot that add consequent features to your discord servers. such as : Web Dashboard, Auto-modération, custom commands, analytics. \n\nQuested is primary focused on the needs of Game developers. You can find friendly functionalities for your players.",
+        "foundingDate": "2019",
+        "founders": [
+            {
+            "@type": "Person",
+            "name": "Tryall"
+            }
+        ],
+        "sameAs": ["https://mee6.xyz", "https://dyno.gg", "https://pancake.gg", "https://nadeko.bot"]
+    }
+</script>
+
+
+<script type="application/ld+json">{
+    "@context":"http://schema.org",
+    "@type":"ItemList",
+    "itemListElement":[
+        {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "Features",
+            "description": "Web Dashboard, InGame-Integration, PickATeam, Achievements and more...",
+            "url":"https://quested.io/#Features"
+        },
+        {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "Free Plan",
+            "description": "Quested is completly free under 100 members",
+            "url":"https://quested.io/pricing"
+        },
+        {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "Web Dashboard",
+            "description": "Configure everything from your Web Dashboard.",
+            "url":"https://quested.io/dashboard"
+        },
+        {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "FAQ & Guides",
+            "description": "Frequently Asked Questions. Everything you need to know about Quested",
+            "url":"https://quested.io/FAQ&Guides"
+        }
+    ]
+}</script>

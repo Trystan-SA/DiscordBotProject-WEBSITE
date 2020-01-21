@@ -1,0 +1,125 @@
+<% include ../components/header %>
+</head>
+<body id="page-top">
+
+<%- include('../components/nav'); %>
+
+
+<div id="Blog">
+    <nav class="Category row">
+        <div class="col offset-l1 l2"><a href="../../blog"><h1>Blog</h1></a></div>
+
+       
+        <div class="col l6 s12 hide-on-med-and-down">
+            <% if(locals.Categories){
+                for(var i = 0; i < Object.values(locals.Categories).length; i++){ 
+
+                    var DisplayCategory = Object.values(locals.Categories)[i]['DisplayTag']
+                    DisplayCategory = DisplayCategory.replace(/_/g, " ");
+                    %>
+                   <a class="CategoryLink" href="../../blog/<%= Object.values(locals.Categories)[i]['DisplayTag']; %>"><%= DisplayCategory %></a>
+                <%};
+            }%>
+        </div>
+
+
+        <div class="col l3">
+            <% if(locals.OwnerData){
+                    if(locals.OwnerData.oauth['id'] == "106034269914144768"){%>
+                    <a class="waves-effect waves-light btn-large right-align bluebutton" href="../../bloger/writearticle">Write an Article</a>
+            <%      }
+                } %>
+        </div>
+    </nav>
+
+    <div class="row" style="margin-bottom:0;">
+        <div class="col offset-l3 l9 s12">
+            <%if (locals.query){
+                var Displayed = locals.query;
+                Displayed = Displayed.replace(/_/g, " ");
+                %>
+                
+                <br>
+                <span class="Ariane"><a href="../../blog">Blog</a> > <a href="../../blog/<%= locals.query %>"><%= Displayed  %></a></span>
+
+            <%}%>
+        </div>
+    </div> 
+
+    <div class="row" style="margin-bottom:0;">
+        <div class="col offset-l3 l4 s12">
+
+            <%if (locals.Articles){
+                for(var y = 0; y < locals.Articles.length; y++){
+                    var articletime = new Date(locals.Articles[y].post_date);
+
+                    var Day = articletime.getDate();
+                    if(Day < 10){
+                        Day = "0" + Day; 
+                    }
+
+                    var Month = articletime.getMonth();
+                    if(Month < 10){
+                        Month = "0" + Month;
+                    }
+
+                    var PostDate = Day + "-" + Month + "-" + articletime.getUTCFullYear();   
+
+                    var CategoryName = locals.Articles[y].Category;
+                    CategoryName = CategoryName.replace(/_/g, " ");
+
+                    var ArticleURL = locals.Articles[y].Title;
+                    ArticleURL = encodeURI(ArticleURL);
+                    %>
+
+                    <div class="Article_Card">
+                        <a href="../../blog/<%= locals.Articles[y].Category %>/<%= ArticleURL %>">
+                        <img src="/images/articles/<%= locals.Articles[y].ID %>.jpg"></img>
+                        <div class="Text">
+                            <h2><%= locals.Articles[y].Title %></h2>
+                            <p><%= locals.Articles[y].Description %></p></a>
+                            <span><%= PostDate %> | <a href="/about_me"><%= locals.Articles[y].author %></a> | <a href="../blog/<%= locals.Articles[y].Category %>"><%= CategoryName %></span></a>
+                        </div>
+                    </div>
+            <% }
+            }%>
+        </div>
+
+        <div class="col l3 s12">
+            <div class="NewsLetter">
+                <h3>Subscribe to our Newsletter 😋 </h3>
+
+
+                <!-- Begin Mailchimp Signup Form -->
+                <div id="mc_embed_signup">
+                    <form action="https://gmail.us3.list-manage.com/subscribe/post?u=389eb4848390a3376dbad9b5e&amp;id=ce4763d752" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll">
+                        
+                    <div class="mc-field-group">
+                        <label for="mce-EMAIL">Email Address </label>
+                        <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                    </div>
+                        <div id="mce-responses" class="clear">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_389eb4848390a3376dbad9b5e_ce4763d752" tabindex="-1" value=""></div>
+                        <div class="clear">  <input type="submit" value="Subscribe   " name="subscribe" id="mc-embedded-subscribe" class="button waves-effect waves-light btn bluebutton"></div>
+                        </div>
+                    </form>
+                </div>
+                <!--End mc_embed_signup-->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="BreadcrumbList">
+    <%- locals.Breadcrumb %>
+</div>
+
+
+<%- include ../components/footer %>

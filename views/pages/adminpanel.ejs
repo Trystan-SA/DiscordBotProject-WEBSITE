@@ -1,0 +1,52 @@
+<% include components/header %>
+<meta name="robots" content="noindex, nofollow" />
+</head>
+<body id="page-top">
+    
+<script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+<%- include('components/nav'); %>
+
+
+<div class="row">
+    <div class="col s1 AdminMenu">
+        <div class="entry" onclick="showmenu('Support_ADMP')">Support</div>
+        <div class="entry" onclick="showmenu('Refund_ADMP')">Refund</div>
+    </div>
+
+    <!--<div class="AdminContent col s11">
+        <a href="/adminpanel/LaunchPremiumDailyVerification" class="waves-effect waves-light btn">Launch Premium Daily Verification</a>
+        <a href="/adminpanel/TestingEmail" class="waves-effect waves-light btn">Email Testing</a>
+
+        <br><br><br><br>
+        <p>Refund and cancel a subscription at the same time</p>
+        <form action="adminpanel/CancelAndRefund" method="post" style="width:250px">
+        <label class="blue-grey-text text-darken-4">SUBSCRIPTION-ID (I-51578794)</label>
+        <input id="first_name" name="SubscriptionID" type="text" class="blue-grey"> 
+        <input type="submit" value="Submit">
+        </form>
+    </div>-->
+
+
+    <div id="Support_ADMP" style="display:block" class="AdminContent col s11">
+        <div class="SupportList">
+            
+        </div>
+    </div>
+
+
+    <div id="Refund_ADMP" style="display:none" class="AdminContent col s11">
+        <h1>ok</h1>
+    </div>
+</div> 
+
+
+<script>
+ 
+    function showmenu(Page){
+        $('.AdminContent').hide();
+        $(`#${Page}`).show();
+    }
+
+
+M.AutoInit();
+</script>

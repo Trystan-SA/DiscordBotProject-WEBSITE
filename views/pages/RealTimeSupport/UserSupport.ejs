@@ -1,0 +1,180 @@
+<div class="Support_Toogle" onclick="ShowSupport()">
+    <i class="material-icons">live_help</i>
+</div>
+
+
+<div id="Support">
+    <div class="Header">
+        <h4>Quested Support</h4>
+        <span id="Dot" class="tooltipped" data-tooltip="..."></span>
+    </div>
+
+    <div class="ScollContent">
+        <div class="Content">
+        </div>
+        <div id="ScollGuard"></div>
+    </div>
+
+    <div class="Writter">
+        <from action="#">
+            <div contenteditable="true" id="SupportTextInput"></div>
+            <i onclick="SendMsg()" class="SupportSend material-icons">send</i>
+        </from>
+    </div>
+</div>
+
+
+<script src="../../js/socketio.js"></script>
+<script>
+var Owner = <%- JSON.stringify(locals.Owner) %>;
+var MSG_Window = $('#Support .Content');
+var socket;
+
+//Initialize Connection
+function InitConnection(){
+    socket = io('http://localhost:3000/');
+    socket.on('connect', function(data){
+        ChangeDot('Green');
+
+        //Send Owner Data
+        if($(MSG_Window).html().length < 1){socket.emit('join', Owner, false);} 
+        else {socket.emit('join', Owner, true);}
+        
+        //Received MSG from Server//
+        socket.on('SendMSG', function(MSG){DrawMSG(MSG);})
+        socket.on('DrawMSG', function(MSG){
+            $(MSG_Window).append('<div class="UserMSG slide-in-right"><p>' + MSG + '</p></div>'); 
+            $('#Support .ScollContent').animate({ scrollTop: $('#ScollGuard').offset().top}, "slow") 
+        })
+    });
+}
+
+
+
+var AlreadyShownWrittingBox = false;
+function DrawMSG(MSG){
+    //If MSG is an array, dispatch and send then one by one to the ProcessMSG function//
+    if(MSG.constructor === Array){ 
+        var ilength = MSG.length;
+        var i = 0;
+        ws();
+
+        function ws(){
+            var time = 1000;
+            if(MSG[i].timeout != undefined){time = MSG[i].timeout}
+
+            StaffWrittingSomething(time)
+            .then((res)=>{
+                ProcessMSG(MSG[i]);
+                i++;
+                if(i < ilength){ ws()}
+            });
+        }
+       
+    }
+    else {
+        StaffWrittingSomething()
+        .then((res)=>{
+            ProcessMSG(MSG);
+        })
+    }
+
+
+    async function StaffWrittingSomething(timeout){
+
+        return new Promise((resolve, reject)=>{
+            var time = 1000;
+            if(timeout != undefined){time = timeout}
+
+            if(AlreadyShownWrittingBox == false){AlreadyShownWrittingBox = true; $(MSG_Window).append(`<div id="Writting" class="StaffMSG"><span class="LoadUp s1">&nbsp;</span> <span class="LoadUp s2">&nbsp;</span> <span class="LoadUp s3">&nbsp;</span></div>`);}
+            setTimeout(() => {
+                $(`#Writting`).remove();
+                AlreadyShownWrittingBox = false;
+                resolve(true);
+            }, time);
+        })
+    }
+
+    function ProcessMSG(MSG){
+        if(MSG.type === "msg"){
+            $(MSG_Window).append('<div class="StaffMSG slide-in-left"><p>' + MSG.content + '</p></div>');
+        }
+        else if (MSG.type === "button"){
+            $(MSG_Window).append(`<div class="StaffButton slide-in-left" onclick="msgbutton(${MSG.id})"> ${MSG.content} </div>`)
+        }
+        else if (MSG.type === "OpenTicket"){
+            $(MSG_Window).append(`<div class="StaffButton StaffContact slide-in-left" onclick="msgbutton(${MSG.id})"> ${MSG.content} </div>`);
+        }
+        else {
+            $(MSG_Window).append('<div class="StaffMSG slide-in-left"><p>' + MSG + '</p></div>');
+        } 
+
+        $('#Support .ScollContent').animate({ scrollTop: $('#ScollGuard').offset().top}, "slow") 
+    }
+}
+
+
+function msgbutton(ID){
+    if(ID === 1){SendMsg("What is Quested?")}
+    else if (ID === 2){SendMsg("What can I do with Quested?")}
+    else if (ID === 3){SendMsg("Does Quested will cost anything?")}
+    else if (ID === 4){SendMsg("I want to speak to the Manager")}
+}
+
+
+/** Send message when user pressed send icon */
+function SendMsg(MSG){
+    if(MSG){ //If MSG parameter filled, take this one instead of the text input//
+        socket.emit('SendMSG', MSG);
+    }
+    else { //Else if MSG empty, get the content of the Text input//
+        var MSG_Input = $('#SupportTextInput').html();
+        $('#SupportTextInput').html('');
+        socket.emit('SendMSG', MSG_Input);
+    }
+   
+}
+
+
+
+socket.on('disconnect', (Reason)=>{
+    ChangeDot('Red');
+    console.log("DISCONNECT")
+})
+
+
+
+socket.on('reconnecting', (AttemptNumber)=>{
+    $(MSG_Window).html('');
+    console.log("RECONNECT");
+})
+
+
+
+function ShowSupport(){
+    if($('#Support').css('display') === "block"){
+        $('#Support').hide(400);
+        $(MSG_Window).html('');
+    }
+    else {
+        $('#Support').show(400);
+        InitConnection();
+    }
+    
+}
+
+/** Change the Status of the little dot (Used for telling to the user if the support is on or not);
+ * Status can be : Green, Red, Grey 
+ */
+function ChangeDot(Status){
+    if(Status == 'Green'){
+        $('#Dot').css('background-color', '#27ae60').attr('data-tooltip', 'Support Active');
+    }
+    else if (Status == 'Red'){
+        $('#Dot').css('background-color', '#e74c3c').attr('data-tooltip', 'Support Down...');
+    }
+    else if (Status == "Grey"){
+        $('#Dot').css('background-color', '#8a8a8a').attr('data-tooltip', 'Connecting...');
+    }
+}
+</script>

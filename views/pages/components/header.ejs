@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Discord bot">
+    <meta name="author" content="Tryall">
+    
+    <link rel="stylesheet" href="../../css/materialize.min.css">
+    <link rel="stylesheet" href="../../css/try.css">
+    <link rel="stylesheet" href="../../css/try_mobile.css">
+    <link rel="stylesheet" href="../../css/animation.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+    <link rel="stylesheet" href="http://lab.lepture.com/editor/editor.css" />
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    
+    <script src="../../js/materialize.min.js"></script> 
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script src="../../js/jquery-ui.min.js"></script>
+
+    <meta name="google-site-verification" content="aROJ5KYbLrsOGt1HHLdw8v-_O9b0FfRacOiminaUr9A" />
+
+
+    <div id="Message">
+        <% if(locals.MessageInfo != '' && locals.MessageInfo){ %>
+            <% for(i=0; i < locals.MessageInfo.length; i++){ %>
+                <div id="Info" class="row swing-in-top-fwd">
+                    <div class="col s11">
+                        <h1><%- locals.MessageInfo[i] %></h1>
+                    </div>
+                    <div class="col s1">
+                        <span onclick="$(this).parent().parent().hide(400)">X</span>
+                    </div>
+                </div>
+            <%}%>
+        <%}%> 
+
+        <% if(locals.MessageError != '' && locals.MessageError){ %>
+            <% for(i=0; i < locals.MessageError.length; i++){ %>
+                <div id="Error" class="row swing-in-top-fwd">
+                    <div class="col s11">
+                        <h1><%- locals.MessageError[i] %></h1>
+                    </div>
+                    
+                    <div class="col s1">
+                        <span onclick="$(this).parent().parent().hide(400)">X</span>
+                    </div>
+                </div>
+            <%}%>
+        <%}%>
+       
+        <% if(locals.MessageSuccess != '' && locals.MessageSuccess){ %>
+            <% for(i=0; i < locals.MessageSuccess.length; i++){ %>
+                <div id="Success" class="row swing-in-top-fwd_slow">
+                    <div class="col s11">
+                        <h1><%- locals.MessageSuccess[i] %></h1>
+                    </div>
+                    <div class="col s1">
+                        <span onclick="$(this).parent().parent().hide(400)">X</span>
+                    </div>
+                </div> 
+            <%}%>
+        <%}%>
+    </div>
+    
+
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" /> 
+
+
+

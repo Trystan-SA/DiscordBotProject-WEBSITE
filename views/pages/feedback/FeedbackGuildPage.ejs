@@ -1,0 +1,287 @@
+<% include ../components/header %>
+</head>
+<body id="page-top">
+<%- include('../components/nav'); %>
+
+
+
+<div id="Feedback" class="row">
+    <h1 class="center-align"><%= locals.GuildName %></h1>
+
+    <% if(locals.Owner){ %>
+    <div class="CreateTicket col offset-l1 l3 s12">
+        <h4 class="center-align title">Suggest something</h4>
+        <br><br>
+               
+        <form method="post" action="/feedback/postticket" id="TicketPublish">
+
+            <label>A short title describing the feature</label>
+            <input type="text" id="title_ticket_add" name="title" required minlength="5" maxlength="160" autocomplete="off" length="10">
+
+            <br><br>
+
+            <label>A more complete description of the feature</label>
+            <textarea class="materialize-textarea" type="text" name="description" required minlength="5" maxlength="1000" autocomplete="off"></textarea>
+
+            <br><br>
+            
+            <select class="browser-default" id="categoryselect" name="category">
+            </select>
+
+            <br>
+
+            <p style="color:#919191">By publishing a Feedback suggestion. You agree that your Username and your Profile picture will be shared on this page publicly.</p>
+
+            <div style="display:none"><input type="text" name="Token" value="<%= locals.encrypted %>"></div>
+            <input class="submit" type="submit" value="Publish Feedback Suggestion">
+        </form>
+    </div>
+    <% } else {%> 
+        <div class="CreateTicket col offset-l1 l3 s12">
+                <h4 class="center-align title">Suggest something</h4>
+                <br><br>
+
+                <p>You need to be logged-in to post a Feedback</p>
+                <a href="/login"><div class="btn bluebutton">Login Now</div></a>
+                <br><br>
+        </div> 
+        
+    <% }%>
+
+
+
+    <div class="TicketContent col l4 s12">
+        <div class="Shorter center-align">
+            <span id="Showby_Tag" onclick="Toogle_ShorterTag()">Tag</span> 
+            <span id="Showby_Status" onclick="Toogle_ShorterStatus()">Status</span>
+            <span id="Showby_Date" onclick="ShortBy_Function('Date')">Date</span>
+            <span id="Showby_Upvotes" onclick="ShortBy_Function('Upvotes')">Upvote</span>
+            <span id="ShowArchived" style="color:#757575" onclick="ShowArchivedFunc()">Archived</span>
+        </div>
+
+        <div class="progress" id="loader">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+
+    <div class="Presentation center-align">
+        
+    </div>
+</div>
+
+
+
+
+<!-- SHORTER EXPAND -->
+<div id="ShorterPopup">
+    <div id="Shorter_Status" class="ShorterInspect swing-in-top-fwd" style="display:none;">
+        <form action='#'>
+            <label><input onclick="ShortBy_Function(undefined , 'none')" name="group_status" type="radio" checked/><span style="color:#d0e2e4;">None</span></label><br>
+            <label><input onclick="ShortBy_Function(undefined , 'default')" name="group_status" type="radio"/><span style="color:#7f8c8d;">Pending</span></label><br>
+            <label><input onclick="ShortBy_Function(undefined , 'declined')" name="group_status" type="radio"/><span style="color:#e74c3c;">Declined</span></label><br>
+            <label><input onclick="ShortBy_Function(undefined , 'selected')" name="group_status" type="radio"/><span style="color:#3498db;">Selected</span></label><br>
+            <label><input onclick="ShortBy_Function(undefined , 'inprogress')" name="group_status" type="radio"/><span style="color:#e67e22;">In Progress</span></label><br>
+            <label><input onclick="ShortBy_Function(undefined , 'completed')" name="group_status" type="radio"/><span style="color:#27ae60;">Completed</span></label>
+        </form>
+    </div>
+
+    <div id="Shorter_Tag" class="ShorterInspect swing-in-top-fwd" style="display:none;">
+        <form action='#'>
+            <label><input onclick="ShortBy_Function(undefined , undefined ,'0')" name="group_status" type="radio" checked/><span style="color:#d0e2e4;">None</span></label><br>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function Place_ShorterStatus(){
+        $('#Shorter_Status').position({
+            my:"center top",
+            at:"center center",
+            of:"#Showby_Status"
+        });
+    }
+
+    function Place_ShorterTag(){
+        $('#Shorter_Tag').position({
+            my:"center top",
+            at:"center center",
+            of:"#Showby_Tag"
+        });
+    }
+    
+    function Toogle_ShorterStatus(){
+        $('#Shorter_Tag').css('display', 'none')
+
+        if($('#Shorter_Status').css('display') == 'none'){
+            $('#Shorter_Status').css('display', 'block')
+            $('#Showby_Status').css('font-weight', '600')
+
+        } 
+        else {
+            $('#Shorter_Status').css('display', 'none'); 
+            $('#Showby_Status').css('font-weight', '400')
+        }
+        Place_ShorterStatus();
+    }
+
+    function Toogle_ShorterTag(){
+        $('#Shorter_Status').css('display', 'none')
+
+        if($('#Shorter_Tag').css('display') == 'none'){
+            $('#Shorter_Tag').css('display', 'block')
+            $('#Showby_Tag').css('font-weight', '600')
+        } 
+        else {
+            $('#Shorter_Tag').css('display', 'none'); 
+            $('#Showby_Tag').css('font-weight', '400')
+        }
+        Place_ShorterTag();
+    }
+
+    
+    window.onresize = function(){Place_ShorterStatus(); Place_ShorterTag();}
+    Place_ShorterStatus();
+    Place_ShorterTag();
+    
+    $(window).click(function(e){
+        if($(e.target).parents('#ShorterPopup').length == 0){
+            
+            if($(e.target).parents('.Shorter').length == 0){
+                $('#Shorter_Status').hide(400);
+                $('#Shorter_Tag').hide(400);
+            }
+        }
+    })
+</script>
+
+
+
+<!--
+######## MODAL INSPECTION TICKET ########
+-->
+<div id="TicketPanel" class="Modal" style="overflow-x: hidden; overflow-y: hidden;">
+    <div class="AccountModalContent swing-in-top-fwd">
+        <div class="card">
+            <span class="close-modal right-align" onclick=" var event = { 'target': 'CloseSpanModal'}; CloseModal(event)">X</span>
+            <br>
+            <br>
+
+            <div class="card-content">
+                <br>
+
+               
+                    <% if(locals.FeedbackOwner){  %> <!-- If the User is the Owner of the Guild --> 
+                        <div class="AdminPart z-depth-3">
+                            <a class="waves-effect waves-light btn redbutton">Ban user</a>
+                            <a class="waves-effect waves-light btn bluebutton" onclick="ArchiveTicket()" id="ArchiveTicket">Archive Feedback</a>
+                            <a class="waves-effect waves-light btn bluebutton" onclick="CloseComments()" id="CloseComent">Close Comments</a>      
+                            <p class="right" style="color:#8b8aacaf">Visible only by you</p>
+
+                            <div id="Status_Change">
+                                <span onclick="UpdateTicketStatus('default')" style="background-color:#7f8c8d" class="Pastille" id="Status_default">Default</span>
+                                <span onclick="UpdateTicketStatus('declined')" style="background-color:#e74c3c" class="Pastille" id="Status_declined">Declined</span>
+                                <span onclick="UpdateTicketStatus('selected')" style="background-color:#3498db" class="Pastille" id="Status_selected">Selected</span>
+                                <span onclick="UpdateTicketStatus('inprogress')" style="background-color:#e67e22" class="Pastille" id="Status_inprogress">In Progress</span>
+                                <span onclick="UpdateTicketStatus('completed')" style="background-color:#27ae60" class="Pastille" id="Status_completed">Completed</span>
+                            </div> 
+
+                            <br>
+
+                            <div id="Tag_Change">
+                            </div>
+                            
+                        </div> 
+                        <br><br>
+                    <%} %>
+               
+
+               
+        
+                <div class="subject z-depth-3">
+                    <img id="UserProfile" class="circle profilepicture" style="float:left !important; margin-right:15px;" src="">
+                    <span style="font-size:1.5em; line-height:60px;" id="Title"></span>
+
+                    <br><br>
+
+                    <p id="Description" style="text-align: justify"></p>
+
+                    <br>
+
+                    <div style="color:rgb(167, 167, 167)">
+                        <span id="AuthorName"></span> - <span id="PostDate"></span>
+
+                        <div class="ticketCategory" id="CardStatus" style="display: inline"> 
+                            <span style="filter: brightness(300%)">Default</span>
+                        </div>
+                        <div class="ticketCategory" id="Category_Background" style="display: inline"> 
+                                <span id="Category_Text" style="filter: brightness(150%); font-weight: 500">Default</span>
+                        </div> 
+                        
+                        <% if(locals.FeedbackOwner){  %>
+                            <div id="EditableTicketOwner" style="float:right;">
+                                <a class="tooltipped" data-position="bottom" data-tooltip="Delete" style="cursor: pointer;" onclick="DeleteTicket();"><i class="material-icons">delete</i></a>
+                            </div>
+                        <% } else { %>
+                            <div id="EditableTicket" style="float:right; display:none;">
+                                <a class="tooltipped" data-position="bottom" data-tooltip="Delete" style="cursor: pointer;" onclick="DeleteTicket();"><i class="material-icons">delete</i></a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <br>
+
+                
+                <div class="subject z-depth-3">
+                    <div id="CommentArea" class="CommentAreaContent"></div>
+                    <% if(locals.Owner){ %>
+                        <div  id="Comment_Posting"></div> 
+                    <% } else {%>
+                        <br><br>
+                        <div>You need to be logged-in to post a comment</div><br>
+                        <a href="/login"><div class="btn bluebutton">Login Now</div></a>
+                        <br><br>
+                    <%}%>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="DeleteTicketConfirm" class="Modal" style="overflow-x: hidden; overflow-y: hidden; padding-top:250px;">
+    <div class="AccountModalContent swing-in-top-fwd" style="margin-left:auto; margin-right:auto; width:30%;">
+        <div class="card">
+            <span class="close-modal right-align" onclick=" var event = { 'target': 'CloseSpanModal2'}; CloseModal2(event)">X</span>
+            <br>
+            <br>
+
+            <div class="card-content">
+                <p class="center">Are you sure you want to delete this Feedback forever ?</p>
+                <br>
+                <div class="center">
+                    <a onclick="ConfirmedDeleteTicket(); var event = { 'target': 'CloseSpanModal2'}; CloseModal2(event)" style="margin-right:15px"><div class="btn redbutton">Yes, Delete it</div></a>
+                    <a onclick="var event = { 'target': 'CloseSpanModal2'}; CloseModal2(event)"><div class="btn bluebutton">No, Go back</div></a>
+                </div>
+                <br>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+var PluginData = <%-JSON.stringify(locals.PluginData)%>;
+var GuildID = <%- JSON.stringify(locals.GuildID) %>;
+var Oauth = <%if(locals.Owner){ %> <%- JSON.stringify(locals.Owner.DiscordOauth) %> <% } else { %> "" <% } %>;
+var Encrypted = <%- JSON.stringify(locals.encrypted) %>;
+<% if(locals.LoadingTicket){ %>var LoadingTicket = <%- JSON.stringify(locals.LoadingTicket); %><%} else {%> var LoadingTicket = undefined <%}%>
+
+</script>
+<script type="text/javascript" src="/js/feedback.js"></script>
+
+<%- include ../components/footer %>

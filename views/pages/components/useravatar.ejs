@@ -1,0 +1,18 @@
+<% if(locals.Owner) {
+        if(locals.Owner.DiscordOauth['avatar'] == null){ %> <!-- If the user profile picture is missing -->
+            <a href="../../../dashboard" rel="nofollow">
+                <img class="circle profilepicture" src="../../../images/unknown-user.png"/>
+            </a>
+            
+        <% } else { %> <!-- If the user is authentified, get his personal menu -->
+      
+            <a href="../../../dashboard" rel="nofollow">
+            <img class="circle profilepicture pulse"src=" <%= 'https://cdn.discordapp.com/avatars/' + locals.Owner.DiscordOauth['id'] + '/' + locals.Owner.DiscordOauth['avatar'] + '.png' %>" />
+            </a>
+
+        <%  } 
+        } else {%>
+
+ <li><a href="login" rel="nofollow">Login</a></li>
+
+<% }%>

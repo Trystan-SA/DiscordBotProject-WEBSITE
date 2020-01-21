@@ -1,0 +1,56 @@
+<div class="title"><h1> <%if(locals.serverselected){%><%= locals.serverselected %> <% } %> </h1></div>
+
+
+<%  if(locals.SelectedGuildInfo){ %>
+
+
+ <div id="Analytics_Panel">
+            <%- include('analytics'); %>
+        </div> 
+  <div class="row swing-in-top-fwd container cardrow" id="carddrawboard">
+
+      <!-- Don't delete, JQUERY will place the user panels cards here at page load -->
+  </div>
+
+
+<%} else if(locals.serverselected){%>
+
+<!-- IF THE BOT IS NOT ALREADY IN THE SERVER-->
+
+
+<div class="row"  style="margin-bottom:15vw;">
+    <div class="col l3"></div>
+
+    <div class="col l6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">I am not on this server !</span>
+          <p><br>It seems that I never joined this Discord server before. Invite me in so I can start being a good bot !</p>
+          <br><br>
+          <a class="waves-effect waves-light btn-large right-align greenbutton" href="https://discordapp.com/api/oauth2/authorize?client_id=581213845520121870&permissions=8&redirect_uri=http%3A%2F%2F51.77.229.195%2Flogincallback&scope=bot"><i class="material-icons right">memory</i>Invite the bot</a>
+          <a class="waves-effect waves-light btn right-align bluebutton" style="margin-left:20px" >Terms of use</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col l3"></div>
+</div>
+
+<% } else {%>
+
+<div class="row" style="margin-bottom:15vw;">
+    <div class="col l3"></div>
+    <div class="col l6">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">First step</span>
+          
+          <p><br>Select one of your Discord server by using the <b>drop-box above</b>. If nothing is showed up, it's because you are not the owner of any discord server.</p>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="col l3"></div>
+</div>
+<% } %>

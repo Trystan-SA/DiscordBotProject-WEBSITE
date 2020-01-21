@@ -1,0 +1,102 @@
+<% include components/header %>
+<meta name="robots" content="noindex, nofollow" />
+</head>
+<body id="page-top">
+
+<script src="https://www.paypal.com/sdk/js?client-id=ATs8D4ekzioCA2W5XqCJgLM1E_3_FXadPsr6KRQhyK0zvDzXvuynilPYTF2fHlMHTwpqpSh4wXrZ6Wy8&vault=true"></script>
+
+<%- include('components/nav'); %>
+
+
+<div><PremiumData   AccessToken ="<%= locals.AccessToken %>" 
+                    GuildID ="<%=locals.GuildID%>"
+                    SelectedServer = "<%= locals.SelectedServer%>"
+                    PayInfo ="<%= locals.PayInfo %>" 
+                    UserDiscordName ="<%= locals.UserDiscordName %>" 
+                    UserDiscordID ="<%= locals.UserDiscordID %>" 
+                    UserEmail="<%= locals.UserEmail %>"
+/></div>
+<script src="js/checkout.js"></script>
+
+
+
+<div class="Error_Handler">
+    <span id="Error_MSG">An error occured : </span>
+</div>
+<div class="Success_Handler">
+    <span id="Success_MSG">Success :  </span>
+</div>
+
+
+
+<div class="Checkout">
+
+    <div class="header">
+    <h1> Subscribe to Quested </h1>
+    </div>
+
+    <div class="content">
+        <p class="note">
+           Please notice that Quested Subscription is powered by Paypal only. By buying any subscription or by using the services of Quested. You automatically accept the
+            <a href="https://docs.google.com/document/d/1gPzlyVXo1YBPyiv-Tj-QGSywd9Md_N4Zz_Lv6yY6keI/edit?usp=sharing" target="_blank">Terms of Services</a>. 
+            Also, if you want to know more about how your data is stored and used by Quested, please read the  
+            <a href="https://docs.google.com/document/d/1tCUIp_NrPFtT3Se72XE-4J1jSMOTUKNmHcKepzKGe3o/edit?usp=sharing" target="_blank"> Privacy Policy</a>
+        </p>
+
+        <span class="step">Select the server you want to Upgrade</span><br><br>
+
+        <%if (locals.SelectedServer){%>
+            <a class='dropdown-trigger btn-large verylarge href='#' data-target='dropdown1'><i class="material-icons right">expand_more</i> <%= locals.SelectedServer %> </a>
+        <%} else { %>
+            <a class='dropdown-trigger btn-large verylarge href='#' data-target='dropdown1'><i class="material-icons right">expand_more</i>Select a Server</a>
+        <%} %>
+
+
+        <br>
+        <%if (locals.error){%>
+            <p class="error"> <%=locals.error%> </p>     
+        <%}%>
+        <div class="loaded center-align">
+            <div class="preloader-wrapper big active ">
+                <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="step2">
+
+            <div id="step2_content"></div>        
+            <div class="step2_paragraph">
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+<!-- Dropdown Structure -->
+<ul id='dropdown1' class='dropdown-content'>
+<% for(i in locals.guilds) {
+    if(locals.guilds[i].owner == true){%>
+    
+    <li><a href="?server=<%=locals.guilds[i].name%>" ><%= locals.guilds[i].name%> </a></li>
+    <%} %>
+<% }%>
+</ul>
+
+
+<% include components/footer %>
+
+<script> M.AutoInit();</script>
