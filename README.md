@@ -8,4 +8,4 @@
  
  This project will not work out of nothing from a git clone. It is broken since the code won't generate a Mysql database configuration from itself. I just share the source if someone want to have an eye into it. 
  
- ###Please note that this project was my first time doing a SaaS app, I never used Nodejs before that and barely knew Javascript.
+Please note that this project was my first time doing a SaaS app, I never used Nodejs before that and barely knew Javascript.
